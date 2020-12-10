@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-5">
+        <div class="form-check">
+            <% for(let i= 0; i < arr.length; i++) {%>
+            <div style="font-size: 21pt">
+                <input class="selectLetter form-check-input" type="radio" id="selectLetter<%=i%>"
+                       name="selectLetter" data-subject=<%=arr[i].subject%>  data-text=<%=arr[i].text%>>
+                <label for="selectLetter<%=i%>" class="form-check-label"><%=arr[i].subject%></label>
+            </div>
+            <% } %>
+        </div>
+    </div>
+    <div style="width: 50%">
+        <form action="/sendLetters" method="post">
+            <div class="form-group">
+                <label for="sendSubject">Subject:</label>
+                <input id="sendSubject" class="form-control" type="text" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="sendText">Text:</label>
+                <textarea id="sendText" class="form-control" name="text" required></textarea>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    const textField = document.getElementById('sendText');
+    const subjectField = document.getElementById('sendSubject');
+
+    document.querySelectorAll('.selectLetter').forEach(input => {
+        input.addEventListener('change', function (event) {
+            textField.value = this.dataset.text;
+            subjectField.value = this.dataset.subject;
+        });
+    });
+</script>

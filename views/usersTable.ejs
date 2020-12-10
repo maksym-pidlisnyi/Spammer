@@ -1,0 +1,174 @@
+<div class="row">
+    <div class="table-wrapper" style="margin-left: auto; margin-right: auto; width: 100%">
+        <table class="fl-table">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Patronymic</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            <% for(let i= 0; i < arr.length; i++) {%>
+            <tr>
+                <td id="firstName<%=i%>"> <%= arr[i].firstName %></td>
+                <td id="lastName<%=i%>"> <%= arr[i].lastName %></td>
+                <td id="patronymic<%=i%>"> <%= arr[i].patronymic %></td>
+                <td id="email<%=i%>"> <%= arr[i].email %></td>
+                <td>
+                    <form action="/deleteUser" method="post">
+                        <input name="removeBtn" id="removeBtn<%=i%>" type="submit"
+                               class="btn btn-danger deletePersonBtn btn-sm" value="Delete" onclick="prepareToDelete()"
+                               data-toggle="modal" data-target="#modalConfirmDelete"/>
+                    </form>
+                    <button name="editBtn" id="editBtn<%=i%>" type="button" class="btn btn-secondary btn-sm"
+                                                data-toggle="modal" data-target="#editModal">Edit</button>
+                </td>
+            </tr>
+            <% } %>
+        </table>
+    </div>
+    <div style="margin-left: auto; margin-right: auto">
+        <a  href="" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#orangeModalSubscription">Add User</a>
+    </div>
+</div>
+<!--TODO ADD USER MODAL-->
+<style>
+    .modal-notify .modal-header {
+        border-radius: 3px 3px 0 0;
+    }
+    .modal-notify .modal-content {
+        border-radius: 3px;
+    }
+</style>
+<div class="modal fade" id="orangeModalSubscription" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-warning" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold py-2">Add user</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/addUser" method="post">
+                    <div class="form-group">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="firstName">FirstName:</label>
+                        <input id="firstName" class="form-control" type="text" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="lastName">LastName:</label>
+                        <input id="lastName" class="form-control" type="text" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="patronymic">Patronymic:</label>
+                        <input id="patronymic" class="form-control" type="text" name="patronymic" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label for="email">Email:</label>
+                        <input id="email" class="form-control" type="text" name="email" required>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--TODO DELETE MODAL-->
+
+<!--Modal: modalConfirmDelete-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">Are you sure?</p>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
+                <i class="fas fa-times fa-4x animated rotateIn"></i>
+            </div>
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <form action="/deleteUser" method="post">
+                    <input id="" type="submit" class="btn  btn-outline-danger deletePersonBtn" value="Yes"/>
+                    <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">No</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit modal-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-warning" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header text-center">
+                <h4 class="modal-title white-text w-100 font-weight-bold py-2">Edit user</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="white-text">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/editUser" method="post">
+                    <div class="form-group">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="firstName">New FirstName:</label>
+                        <input id="firstName" class="form-control" type="text" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="lastName">New LastName:</label>
+                        <input id="lastName" class="form-control" type="text" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="patronymic">New Patronymic:</label>
+                        <input id="patronymic" class="form-control" type="text" name="patronymic" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label for="email">New Email:</label>
+                        <input id="email" class="form-control" type="text" name="email" required>
+                    </div>
+                    <div class="form-group text-center">
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getCellContent(id) {
+        let numId = id.replace(/\D/g, '');
+        let firstName = document.getElementById("firstName" + numId).innerText;
+        let lastName = document.getElementById("lastName" + numId).innerText;
+        let patronymic = document.getElementById("patronymic" + numId).innerText;
+        let email = document.getElementById("email" + numId).innerText;
+        return {firstName, lastName, patronymic, email};
+    }
+    function prepareToDelete() {
+        document.querySelectorAll('.deletePersonBtn').forEach(btn => {
+            let id = btn.getAttribute("id");
+            let {firstName, lastName, patronymic, email} = getCellContent(id);
+            let val = firstName + " " + lastName + " " + patronymic + " " + email;
+            btn.setAttribute("value", val);
+        });
+    }
+</script>
